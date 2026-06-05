@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO Meta Tags -->
+  <title>Normal Distribution & Empirical Rule (68-95-99.7) | Complete Guide</title>
+  <meta name="description" content="Master the Normal Distribution and Empirical Rule (68-95-99.7 Rule). Learn bell curve statistics, Z-scores, standard deviation, and real-world applications in data science and machine learning." />
+  <meta name="keywords" content="normal distribution, empirical rule, 68-95-99.7 rule, bell curve, gaussian distribution, standard deviation, Z-score, standard normal distribution, statistics, data science, machine learning, probability distribution, mean median mode, outlier detection, hypothesis testing, confidence interval, feature scaling, statistical analysis" />
+  <meta name="author" content="Statistics Learning Hub" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://yourwebsite.com/normal-distribution" />
+
+  <!-- Open Graph / Social SEO -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Normal Distribution & Empirical Rule — Complete Visual Guide" />
+  <meta property="og:description" content="Master the Normal Distribution (Bell Curve) and the 68-95-99.7 Rule with visual examples, Z-score formulas, and real-world data science applications." />
+  <meta property="og:image" content="https://yourwebsite.com/og-normal-distribution.png" />
+
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Normal Distribution and the Empirical Rule (68-95-99.7 Rule)",
+    "description": "A comprehensive guide to the Normal Distribution, Bell Curve, Z-scores, and the Empirical Rule for statistics, data science, and machine learning.",
+    "keywords": "normal distribution, empirical rule, bell curve, z-score, statistics",
+    "author": { "@type": "Organization", "name": "Statistics Learning Hub" }
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink: #0f0e0c;
+      --paper: #f8f5ee;
+      --cream: #f0ead8;
+      --gold: #c9922a;
+      --gold-light: #e8c06a;
+      --teal: #1a5f6e;
+      --teal-light: #2a8a9e;
+      --rust: #b84a2e;
+      --muted: #6b6456;
+      --border: #d4c9b0;
+      --shadow: rgba(15,14,12,0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .header-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 72px 32px 64px;
+      position: relative;
+      z-index: 2;
+    }
+    .header-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 20px;
+    }
+    h1 span { color: var(--gold-light); }
+    .header-sub {
+      font-size: 1.1rem;
+      color: #c8c0b0;
+      max-width: 620px;
+      line-height: 1.65;
+    }
+    .header-rule-badges {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+    .badge {
+      background: rgba(201,146,42,0.18);
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      padding: 6px 14px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+    /* decorative grid */
+    .header-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(201,146,42,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,146,42,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    /* ─── BELL CURVE SVG ─── */
+    .curve-hero {
+      background: var(--ink);
+      padding: 0 32px 56px;
+      display: flex;
+      justify-content: center;
+    }
+    .curve-hero svg { max-width: 860px; width: 100%; }
+
+    /* ─── LAYOUT ─── */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 64px 32px;
+    }
+
+    /* ─── TYPOGRAPHY ─── */
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin: 64px 0 20px;
+      color: var(--ink);
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--border);
+    }
+    h2:first-child { margin-top: 0; }
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 36px 0 10px;
+      color: var(--teal);
+    }
+    p { margin-bottom: 18px; color: #2a2520; }
+
+    /* ─── CALLOUT BOXES ─── */
+    .callout {
+      border-left: 4px solid var(--gold);
+      background: var(--cream);
+      padding: 22px 28px;
+      margin: 32px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    .callout-teal { border-color: var(--teal); }
+    .callout-rust { border-color: var(--rust); }
+    .callout strong {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 8px;
+    }
+    .callout-teal strong { color: var(--teal); }
+    .callout-rust strong { color: var(--rust); }
+
+    /* ─── FORMULA ─── */
+    .formula {
+      background: var(--ink);
+      color: var(--paper);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.05rem;
+      padding: 24px 32px;
+      border-radius: 8px;
+      margin: 24px 0;
+      text-align: center;
+      letter-spacing: 0.04em;
+      border-top: 3px solid var(--gold);
+    }
+    .formula span { color: var(--gold-light); }
+
+    /* ─── EMPIRICAL RULE VISUAL ─── */
+    .empirical-visual {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      margin: 36px 0;
+      overflow-x: auto;
+    }
+    .empirical-visual svg { display: block; margin: 0 auto; }
+
+    /* ─── TABLES ─── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 28px 0;
+      font-size: 0.95rem;
+    }
+    thead tr { background: var(--ink); color: var(--paper); }
+    thead th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 14px 20px;
+      text-align: left;
+    }
+    tbody tr:nth-child(even) { background: var(--cream); }
+    tbody td {
+      padding: 13px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    tbody tr:last-child td { border-bottom: none; }
+
+    /* ─── IQ EXAMPLE CARD ─── */
+    .iq-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin: 28px 0;
+    }
+    .iq-card {
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 22px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .iq-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+    }
+    .iq-card.one::before { background: var(--gold); }
+    .iq-card.two::before { background: var(--teal); }
+    .iq-card.three::before { background: var(--rust); }
+    .iq-card .pct {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .iq-card.one .pct { color: var(--gold); }
+    .iq-card.two .pct { color: var(--teal); }
+    .iq-card.three .pct { color: var(--rust); }
+    .iq-card .range {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .iq-card .label { font-size: 0.9rem; color: var(--muted); }
+
+    /* ─── APPLICATIONS GRID ─── */
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin: 28px 0;
+    }
+    .app-card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px 22px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .app-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px var(--shadow);
+    }
+    .app-icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .app-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+    .app-card p { font-size: 0.88rem; color: var(--muted); margin: 0; line-height: 1.55; }
+
+    /* ─── PERCENTAGE BREAKDOWN ─── */
+    .pct-strip {
+      display: flex;
+      height: 56px;
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 24px 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+    .pct-strip div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 500;
+      text-align: center;
+      transition: flex 0.3s;
+    }
+
+    /* ─── Z-SCORE TABLE ─── */
+    .z-badge {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--ink);
+      color: var(--gold-light);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+
+    /* ─── TOC ─── */
+    .toc {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 28px 32px;
+      margin: 0 0 48px;
+    }
+    .toc h3 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 16px;
+    }
+    .toc ol {
+      padding-left: 20px;
+      columns: 2;
+      column-gap: 32px;
+    }
+    .toc li { margin-bottom: 8px; font-size: 0.92rem; break-inside: avoid; }
+    .toc a { color: var(--teal); text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--ink);
+      color: #888070;
+      text-align: center;
+      padding: 40px 32px;
+      font-size: 0.85rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    footer strong { color: var(--gold-light); }
+
+    /* ─── KEYWORD TAGS ─── */
+    .keyword-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 20px 0 36px;
+    }
+    .kw {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── SCROLL ANIMATION ─── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 620px) {
+      .toc ol { columns: 1; }
+      .pct-strip div { font-size: 9px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════ HEADER ══════════ -->
+<header>
+  <div class="header-grid"></div>
+  <div class="header-inner">
+    <p class="header-eyebrow">Statistics &amp; Probability · Data Science · Machine Learning</p>
+    <h1>Normal Distribution<br />&amp; <span>Empirical Rule</span></h1>
+    <p class="header-sub">A complete guide to the Bell Curve, Gaussian Distribution, Z-scores, and the 68–95–99.7 Rule — with visual examples and real-world applications.</p>
+    <div class="header-rule-badges">
+      <span class="badge">68% Rule</span>
+      <span class="badge">95% Rule</span>
+      <span class="badge">99.7% Rule</span>
+      <span class="badge">Z-Score</span>
+      <span class="badge">Bell Curve</span>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════ BELL CURVE HERO ══════════ -->
+<div class="curve-hero">
+  <svg viewBox="0 0 860 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bell curve showing normal distribution with standard deviation regions">
+    <defs>
+      <linearGradient id="g1" x1="0" x2="1" y1="0" y2="0">
+        <stop offset="0%" stop-color="#1a5f6e" stop-opacity="0.9"/>
+        <stop offset="100%" stop-color="#2a8a9e" stop-opacity="0.9"/>
+      </linearGradient>
+      <linearGradient id="g2" x1="0" x2="1" y1="0" y2="0">
+        <stop offset="0%" stop-color="#c9922a" stop-opacity="0.9"/>
+        <stop offset="100%" stop-color="#e8c06a" stop-opacity="0.9"/>
+      </linearGradient>
+      <linearGradient id="g3" x1="0" x2="1" y1="0" y2="0">
+        <stop offset="0%" stop-color="#b84a2e" stop-opacity="0.85"/>
+        <stop offset="100%" stop-color="#d4704e" stop-opacity="0.85"/>
+      </linearGradient>
+      <clipPath id="clip3s">
+        <path d="M 86,230 Q 143,30 215,220 L 215,230 Z"/>
+      </clipPath>
+    </defs>
+
+    <!-- Axis line -->
+    <line x1="60" y1="230" x2="800" y2="230" stroke="#444" stroke-width="1.5"/>
+
+    <!-- ±3σ region (rust) -->
+    <path d="M 86,230 Q 130,40 215,225 L 215,230 Z" fill="url(#g3)" opacity="0.4"/>
+    <path d="M 645,225 Q 730,40 774,230 L 645,230 Z" fill="url(#g3)" opacity="0.4"/>
+
+    <!-- ±2σ region (gold) -->
+    <path d="M 215,225 Q 255,15 315,225 L 315,230 L 215,230 Z" fill="url(#g2)" opacity="0.5"/>
+    <path d="M 545,225 Q 605,15 645,225 L 645,230 L 545,230 Z" fill="url(#g2)" opacity="0.5"/>
+
+    <!-- ±1σ region (teal) -->
+    <path d="M 315,225 Q 360,5 430,5 Q 500,5 545,225 L 545,230 L 315,230 Z" fill="url(#g1)" opacity="0.7"/>
+
+    <!-- Bell curve outline -->
+    <path d="M 86,230 Q 130,40 215,225 Q 255,15 315,225 Q 360,5 430,5 Q 500,5 545,225 Q 605,15 645,225 Q 730,40 774,230"
+          fill="none" stroke="#f8f5ee" stroke-width="2.5" stroke-linejoin="round"/>
+
+    <!-- σ tick marks -->
+    <g stroke="#888" stroke-width="1" font-family="JetBrains Mono, monospace" font-size="12" fill="#aaa" text-anchor="middle">
+      <line x1="86" y1="225" x2="86" y2="240"/><text x="86" y="256">−3σ</text>
+      <line x1="215" y1="225" x2="215" y2="240"/><text x="215" y="256">−2σ</text>
+      <line x1="315" y1="225" x2="315" y2="240"/><text x="315" y="256">−1σ</text>
+      <line x1="430" y1="225" x2="430" y2="240"/><text x="430" y="256" fill="#e8c06a" font-weight="bold">μ</text>
+      <line x1="545" y1="225" x2="545" y2="240"/><text x="545" y="256">+1σ</text>
+      <line x1="645" y1="225" x2="645" y2="240"/><text x="645" y="256">+2σ</text>
+      <line x1="774" y1="225" x2="774" y2="240"/><text x="774" y="256">+3σ</text>
+    </g>
+
+    <!-- Percentage labels -->
+    <g font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" font-weight="bold">
+      <text x="430" y="130" fill="#f8f5ee" font-size="15">34.1% + 34.1%</text>
+      <text x="430" y="150" fill="#c8c0b0" font-size="11">≈ 68% within ±1σ</text>
+      <text x="265" y="195" fill="#e8c06a" font-size="12">13.6%</text>
+      <text x="595" y="195" fill="#e8c06a" font-size="12">13.6%</text>
+      <text x="150" y="215" fill="#d4704e" font-size="11">2.1%</text>
+      <text x="710" y="215" fill="#d4704e" font-size="11">2.1%</text>
+    </g>
+
+    <!-- Legend -->
+    <g font-family="Source Serif 4, serif" font-size="12" fill="#c8c0b0">
+      <rect x="62" y="14" width="14" height="12" fill="url(#g1)" opacity="0.8" rx="2"/>
+      <text x="82" y="25">±1σ = 68%</text>
+      <rect x="162" y="14" width="14" height="12" fill="url(#g2)" opacity="0.8" rx="2"/>
+      <text x="182" y="25">±2σ = 95%</text>
+      <rect x="262" y="14" width="14" height="12" fill="url(#g3)" opacity="0.8" rx="2"/>
+      <text x="282" y="25">±3σ = 99.7%</text>
+    </g>
+  </svg>
+</div>
+
+<!-- ══════════ MAIN CONTENT ══════════ -->
+<main>
+
+  <!-- TOC -->
+  <nav class="toc fade-in" aria-label="Table of contents">
+    <h3>Contents</h3>
+    <ol>
+      <li><a href="#what-is">What is Normal Distribution?</a></li>
+      <li><a href="#characteristics">Key Characteristics</a></li>
+      <li><a href="#parameters">Parameters: μ and σ</a></li>
+      <li><a href="#zscore">Z-Score Formula</a></li>
+      <li><a href="#empirical">Empirical Rule (68-95-99.7)</a></li>
+      <li><a href="#example">IQ Score Example</a></li>
+      <li><a href="#applications">Real-World Applications</a></li>
+      <li><a href="#outliers">Outlier Detection</a></li>
+      <li><a href="#ml">Importance in Machine Learning</a></li>
+      <li><a href="#limitations">Limitations</a></li>
+    </ol>
+  </nav>
+
+  <!-- SEO keyword cloud (visible, helpful) -->
+  <div class="keyword-cloud" aria-label="Related topics">
+    <span class="kw">normal distribution</span><span class="kw">gaussian distribution</span>
+    <span class="kw">bell curve statistics</span><span class="kw">empirical rule</span>
+    <span class="kw">68-95-99.7 rule</span><span class="kw">standard deviation</span>
+    <span class="kw">z-score formula</span><span class="kw">probability distribution</span>
+    <span class="kw">data science statistics</span><span class="kw">machine learning preprocessing</span>
+    <span class="kw">outlier detection</span><span class="kw">hypothesis testing</span>
+  </div>
+
+  <!-- ── SECTION 1 ── -->
+  <section id="what-is" class="fade-in">
+    <h2>What is Normal Distribution?</h2>
+    <p>The <strong>Normal Distribution</strong>, also called the <strong>Gaussian Distribution</strong> or <strong>Bell Curve</strong>, is the most important probability distribution in statistics, data science, and scientific research. Natural and human phenomena — heights, IQ scores, measurement errors, blood pressure readings — tend to cluster around a central value and taper symmetrically on both sides.</p>
+    <div class="callout">
+      <strong>Core Idea</strong>
+      A normal distribution is a continuous, symmetric probability distribution where observations are most dense near the mean and decrease gradually toward both extremes, forming the iconic bell-shaped curve.
+    </div>
+    <p>A normally distributed random variable is written as:</p>
+    <div class="formula"><span>X</span> ~ N(<span>μ</span>, <span>σ</span>)</div>
+    <p>where <strong>μ</strong> is the mean and <strong>σ</strong> is the standard deviation.</p>
+  </section>
+
+  <!-- ── SECTION 2 ── -->
+  <section id="characteristics" class="fade-in">
+    <h2>Key Characteristics of a Normal Distribution</h2>
+
+    <h3>1 · Perfect Symmetry</h3>
+    <p>The distribution is perfectly symmetric about its mean. Exactly <strong>50%</strong> of observations fall below the mean and 50% above it.</p>
+
+    <h3>2 · Mean = Median = Mode</h3>
+    <p>In a perfectly normal distribution, all three measures of central tendency coincide at the exact center of the curve.</p>
+
+    <h3>3 · Bell-Shaped Curve</h3>
+    <p>The curve rises gradually to a single peak at the mean, then decreases symmetrically outward — creating the universally recognizable bell shape.</p>
+
+    <h3>4 · Total Area = 1 (100%)</h3>
+    <p>The entire area under the normal curve equals 1, allowing probabilities to be computed as the area under specific regions of the curve.</p>
+
+    <h3>5 · Asymptotic Tails</h3>
+    <p>The tails extend infinitely in both directions, approaching — but never touching — the horizontal axis. This is called <em>asymptotic behavior</em>.</p>
+  </section>
+
+  <!-- ── SECTION 3 ── -->
+  <section id="parameters" class="fade-in">
+    <h2>Parameters: Mean (μ) and Standard Deviation (σ)</h2>
+    <p>A normal distribution is fully defined by just two numbers:</p>
+
+    <div class="callout callout-teal">
+      <strong>Mean (μ)</strong>
+      Determines the center and peak location of the curve. Shifting μ moves the entire curve left or right without changing its shape.
+    </div>
+    <div class="callout callout-rust">
+      <strong>Standard Deviation (σ)</strong>
+      Controls the spread. A <em>small σ</em> produces a narrow, tall curve. A <em>large σ</em> produces a wide, flat curve. Two distributions can share the same mean yet look entirely different if their standard deviations differ.
+    </div>
+
+    <h3>Standard Normal Distribution</h3>
+    <p>When <strong>μ = 0</strong> and <strong>σ = 1</strong>, the result is the <strong>Standard Normal Distribution</strong> — the universal reference used to calculate probabilities and compare datasets.</p>
+    <div class="formula">Z ~ N(<span>0</span>, <span>1</span>)</div>
+  </section>
+
+  <!-- ── SECTION 4 ── -->
+  <section id="zscore" class="fade-in">
+    <h2>Z-Score: Measuring Distance from the Mean</h2>
+    <p>A <strong>Z-score</strong> expresses any observation in terms of how many standard deviations it sits away from the mean. It enables comparisons across different datasets and scales.</p>
+    <div class="formula">z = (<span>x</span> − <span>μ</span>) / <span>σ</span></div>
+
+    <table>
+      <thead><tr><th>Z-Score</th><th>Interpretation</th></tr></thead>
+      <tbody>
+        <tr><td><span class="z-badge">0</span></td><td>Exactly at the mean</td></tr>
+        <tr><td><span class="z-badge">+1</span></td><td>One standard deviation above the mean</td></tr>
+        <tr><td><span class="z-badge">+2</span></td><td>Two standard deviations above the mean</td></tr>
+        <tr><td><span class="z-badge">−1</span></td><td>One standard deviation below the mean</td></tr>
+        <tr><td><span class="z-badge">−2</span></td><td>Two standard deviations below the mean</td></tr>
+      </tbody>
+    </table>
+    <div class="callout">
+      <strong>Key Uses</strong>
+      Z-scores are widely used for standardization, outlier detection, probability calculation, and feature scaling in machine learning (StandardScaler).
+    </div>
+  </section>
+
+  <!-- ── SECTION 5 ── -->
+  <section id="empirical" class="fade-in">
+    <h2>The Empirical Rule (68–95–99.7 Rule)</h2>
+    <p>The <strong>Empirical Rule</strong> — also known as the <strong>68–95–99.7 Rule</strong> or <strong>Three-Sigma Rule</strong> — describes exactly what fraction of data falls within each band of standard deviations around the mean.</p>
+
+    <!-- Percentage strip -->
+    <div class="pct-strip" role="img" aria-label="Proportion bar showing 68, 95, 99.7 percent bands">
+      <div style="flex:0.1;background:#6b1f0e;">0.15%</div>
+      <div style="flex:2.1;background:#b84a2e;">2.1%</div>
+      <div style="flex:13.6;background:#c9922a;">13.6%</div>
+      <div style="flex:34.1;background:#1a5f6e;">34.1%</div>
+      <div style="flex:34.1;background:#1a5f6e;">34.1%</div>
+      <div style="flex:13.6;background:#c9922a;">13.6%</div>
+      <div style="flex:2.1;background:#b84a2e;">2.1%</div>
+      <div style="flex:0.1;background:#6b1f0e;">0.15%</div>
+    </div>
+
+    <table>
+      <thead><tr><th>Range from Mean</th><th>% of Data</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>μ ± 1σ</strong></td><td><strong>≈ 68%</strong></td><td>Most observations; typical range</td></tr>
+        <tr><td><strong>μ ± 2σ</strong></td><td><strong>≈ 95%</strong></td><td>Almost all data; rarely exceeded</td></tr>
+        <tr><td><strong>μ ± 3σ</strong></td><td><strong>≈ 99.7%</strong></td><td>Nearly all data; outlier boundary</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-teal">
+      <strong>Detailed Breakdown</strong>
+      34.1% between mean and ±1σ · 13.6% between ±1σ and ±2σ · 2.1% between ±2σ and ±3σ · only 0.1% beyond ±3σ on each side.
+    </div>
+  </section>
+
+  <!-- ── SECTION 6 ── -->
+  <section id="example" class="fade-in">
+    <h2>Worked Example: IQ Scores</h2>
+    <p>IQ scores follow a normal distribution with a <strong>mean (μ) of 100</strong> and a <strong>standard deviation (σ) of 15</strong>. Applying the Empirical Rule:</p>
+
+    <div class="iq-grid">
+      <div class="iq-card one">
+        <div class="pct">68%</div>
+        <div class="range">85 — 115</div>
+        <div class="label">Within ±1σ<br/>μ ± 15</div>
+      </div>
+      <div class="iq-card two">
+        <div class="pct">95%</div>
+        <div class="range">70 — 130</div>
+        <div class="label">Within ±2σ<br/>μ ± 30</div>
+      </div>
+      <div class="iq-card three">
+        <div class="pct">99.7%</div>
+        <div class="range">55 — 145</div>
+        <div class="label">Within ±3σ<br/>μ ± 45</div>
+      </div>
+    </div>
+
+    <p>Only <strong>0.3%</strong> of people score outside the 55–145 range — confirming how extraordinary scores at the extremes truly are.</p>
+  </section>
+
+  <!-- ── SECTION 7 ── -->
+  <section id="applications" class="fade-in">
+    <h2>Real-World Applications</h2>
+    <div class="apps-grid">
+      <div class="app-card">
+        <span class="app-icon">📊</span>
+        <h4>Statistics</h4>
+        <p>Forms the foundation of confidence intervals, hypothesis testing, regression analysis, and sampling theory.</p>
+      </div>
+      <div class="app-card">
+        <span class="app-icon">🤖</span>
+        <h4>Machine Learning</h4>
+        <p>Many algorithms perform best when features approximate normality. StandardScaler, PCA, and SVM all rely on this distribution.</p>
+      </div>
+      <div class="app-card">
+        <span class="app-icon">🏭</span>
+        <h4>Quality Control</h4>
+        <p>Manufacturing industries apply normal distributions to monitor production processes and detect defects early.</p>
+      </div>
+      <div class="app-card">
+        <span class="app-icon">💰</span>
+        <h4>Finance</h4>
+        <p>Risk analysts use normal distributions for portfolio management, option pricing, and return forecasting.</p>
+      </div>
+      <div class="app-card">
+        <span class="app-icon">🏥</span>
+        <h4>Healthcare</h4>
+        <p>Medical researchers model blood pressure, cholesterol, birth weight, and other biological measurements.</p>
+      </div>
+      <div class="app-card">
+        <span class="app-icon">🔬</span>
+        <h4>Data Science</h4>
+        <p>Used for anomaly detection, feature engineering, and understanding variability within datasets.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 8 ── -->
+  <section id="outliers" class="fade-in">
+    <h2>Outlier Detection Using the Empirical Rule</h2>
+    <p>Because the normal distribution is so well-characterized, it provides a natural framework for identifying unusual observations:</p>
+    <div class="callout callout-rust">
+      <strong>Rule of Thumb</strong>
+      Values beyond <strong>±2σ</strong> are considered unusual (only 5% of data). Values beyond <strong>±3σ</strong> are likely outliers (only 0.3% of data). This principle underpins anomaly detection in data preprocessing pipelines.
+    </div>
+    <p>This is the basis for statistical process control (SPC), fraud detection, network intrusion detection, and medical diagnostic thresholds.</p>
+  </section>
+
+  <!-- ── SECTION 9 ── -->
+  <section id="ml" class="fade-in">
+    <h2>Importance in Machine Learning</h2>
+    <p>Understanding the normal distribution is essential across the ML pipeline:</p>
+    <table>
+      <thead><tr><th>Algorithm / Technique</th><th>Why Normality Matters</th></tr></thead>
+      <tbody>
+        <tr><td>StandardScaler</td><td>Centers and scales features to unit variance using μ and σ</td></tr>
+        <tr><td>PCA</td><td>Assumes features are approximately normally distributed</td></tr>
+        <tr><td>Linear Regression</td><td>Residuals should be normally distributed</td></tr>
+        <tr><td>Logistic Regression</td><td>Better convergence with normalized features</td></tr>
+        <tr><td>SVM</td><td>Kernel methods benefit from normalized input</td></tr>
+        <tr><td>Neural Networks</td><td>Weight initialization and batch normalization rely on Gaussian assumptions</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── SECTION 10 ── -->
+  <section id="limitations" class="fade-in">
+    <h2>Limitations of the Normal Distribution</h2>
+    <p>Not all real-world data follows a normal distribution. Common examples of <strong>non-normal data</strong> include:</p>
+    <ul style="padding-left:24px;margin-bottom:18px;line-height:2;">
+      <li>Income and wealth distributions (right-skewed)</li>
+      <li>Rainfall and earthquake measurements (heavy-tailed)</li>
+      <li>Stock market returns (fat tails, leptokurtic)</li>
+      <li>Website traffic and social media engagement (power law)</li>
+    </ul>
+    <div class="callout">
+      <strong>Transformations</strong>
+      Skewed data can often be made more normally distributed using <strong>Log Transformation</strong>, <strong>Box-Cox Transformation</strong>, or <strong>Yeo-Johnson Transformation</strong> before applying normal-distribution-based methods.
+    </div>
+  </section>
+
+  <!-- CONCLUSION -->
+  <section class="fade-in" style="margin-top:64px;padding-top:40px;border-top:2px solid var(--border);">
+    <h2 style="margin-top:0;">Conclusion</h2>
+    <p>The <strong>Normal Distribution</strong> is arguably the single most important concept in statistics and data science. Its symmetric bell-shaped structure allows analysts to estimate probabilities, detect outliers, validate model assumptions, and perform statistical inference. The <strong>Empirical Rule (68–95–99.7)</strong> provides an elegant and instantly memorable shorthand for understanding data spread — making it indispensable for students, statisticians, data analysts, and machine learning engineers alike.</p>
+  </section>
+
+</main>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <p>
+    <strong>Normal Distribution &amp; Empirical Rule</strong> · Complete Statistics Reference<br/>
+    <span style="color:#e8c06a;font-size:0.8em;margin-top:8px;display:block;">
+      Topics: gaussian distribution · bell curve · z-score · 68-95-99.7 rule · standard deviation · statistical analysis · data science · machine learning
+    </span>
+  </p>
+</footer>
+
+<script>
+  // Scroll-triggered fade-in
+  const observer = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.12 }
+  );
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
